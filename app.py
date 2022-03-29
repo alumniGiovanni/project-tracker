@@ -7,6 +7,19 @@ from sqlalchemy.ext.declarative import declarative_base
 
 engine = create_engine('postgre://postgree:password@localhost:5432/project_tracker')
 
+Base = declarative_base()
+
+class Project(Base):
+    __tablename__='projects'
+
+    project_id = Column(Integer, primary_key=True)
+    title = Column(String(length=50))
+
+    def __repr__(self) -> str:
+        return "<Project(project_id='{0}', title='{1}')>".format(
+            self.project_id, self.title)
+        #super().__repr__()
+
 
 app = Flask(__name__)
 
