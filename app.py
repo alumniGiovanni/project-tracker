@@ -1,5 +1,13 @@
 from flask import Flask, render_template
 
+from sqlalchemy import Column,Integer,String, ForeignKey
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.ext.declarative import declarative_base
+
+engine = create_engine('postgre://postgree:password@localhost:5432/project_tracker')
+
+
 app = Flask(__name__)
 
 @app.route("/")
