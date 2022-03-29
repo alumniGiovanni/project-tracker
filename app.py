@@ -20,6 +20,21 @@ class Project(Base):
             self.project_id, self.title)
         #super().__repr__()
 
+class Task(Base):
+    __tablename__ = 'tasks'
+
+    task_id=Column(Integer, primary_key=True)
+    project_id = Column(Integer, ForeignKey('projects.project_id'))
+    description = Column(String(length=50))
+
+    project = relationship("Project")
+
+    def __repr__(self) -> str:
+        return "<Task(description='{0}'>".format(
+            self.description
+        ) 
+        #super().__repr__()
+
 
 app = Flask(__name__)
 
