@@ -2,9 +2,9 @@
         <body>
             <h1>Projects</h1>
             <ul>
-                <li><a href="/project/1"></a>Project 1</li>
-                <li><a href="/project/2"></a>Project 2</li>
-                <li><a href="/project/3"></a>Project 3</li>
+                {% for project in projects %}
+                <li><a href="/project/{{ project.project_id }}"></a>{{ project.title }}</li>
+                {% endfor %}
             </ul>
             <br>
             <h3>Add project</h3>
