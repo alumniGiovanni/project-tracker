@@ -21,7 +21,7 @@ class Project(db.Model):
 
 @app.route("/")
 def show_projects():
-    return render_template("index.html")
+    return render_template("index.html", projects=Project.query.all())
 
 @app.route("/projects/<projects_id>")
 def show_tasks(project_id):
