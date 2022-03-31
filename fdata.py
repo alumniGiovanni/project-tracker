@@ -1,10 +1,11 @@
+from flask import session
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 
-engine = create_engine('postgres://postgres:root@localhost:5432/project_tracker')
+engine = create_engine('postgresql://postgres:root@localhost:5432/project_tracker')
 
 Base = declarative_base()
 
@@ -39,3 +40,14 @@ Base.metadata.create_all(engine)
 def create_session():
     session = sessionmaker(bind=engine)
     return session()
+
+if __name__ == "__main__":
+    session = create_session()
+
+    clean_house_project = Project(title="Clean house")
+    session.add(clean_house_project)
+    session.commit()
+
+    task = Task(description="Clean bedroon", project_id=clean_house_project.project_id)
+    session.add(task)
+    session.commit()
