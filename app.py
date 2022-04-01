@@ -1,3 +1,4 @@
+from asyncio import tasks
 from flask import Flask, render_template, session
 
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -18,6 +19,11 @@ class Project(db.Model):
     project_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(length=50))
 
+class Task(db.Model):
+    __tablename__ = 'projects'
+    task_id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(length=50))
+    project = db.relationship("Project")
 
 @app.route("/")
 def show_projects():
@@ -25,7 +31,10 @@ def show_projects():
 
 @app.route("/projects/<projects_id>")
 def show_tasks(project_id):
-    return render_template("project-tasks.html", project_id=project_id)
+    return render_template("project-tasks.html",
+    project=Project.query.filter_by(project_id=project_id).first(),
+    tasks=Task.query.filter_by(project_id=project_id).all()
+    )
 
 @app.route("/add/project", methods=['POST'])
 def add_project():
