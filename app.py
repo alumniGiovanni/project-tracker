@@ -1,5 +1,6 @@
 from asyncio import tasks
-from flask import Flask, render_template, session
+from turtle import title
+from flask import Flask, render_template, session, request, flash, url_for, redirect
 
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy import create_engine
@@ -38,8 +39,15 @@ def show_tasks(project_id):
 
 @app.route("/add/project", methods=['POST'])
 def add_project():
-    return "added"
-
+   # return "added"
+    if not request.form['project-title']:
+        flash("Enter your project", "red")
+    else:
+        project = Project(title=request.form['project-title'])
+        db.session.add(project)
+        db.session.commit()
+        flash("added", "green")
+        return 
 @app.route("/add/task/<project_id>", methods=['POST'])
 def add_task():
     return "task added"
