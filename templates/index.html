@@ -15,8 +15,8 @@
             <br>
             <input type="submit" value="Add project">
         </form>
-        {% for category, message in get_flashed_messages (
+        {% for category, message in get_flashed_messages(
             with_categories=true)%}
-        ) 
+        {% endfor %} 
     </body>
 </html>

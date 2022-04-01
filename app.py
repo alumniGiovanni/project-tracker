@@ -47,9 +47,17 @@ def add_project():
         db.session.add(project)
         db.session.commit()
         flash("added", "green")
-        return 
+    return redirect(url_for('show_projects')) 
+
 @app.route("/add/task/<project_id>", methods=['POST'])
 def add_task():
-    return "task added"
+    if not request.form['task-description']:
+        flash("Enter your task", "red")
+    else:
+        task = Project(title=request.form['task-description'])
+        db.session.add(task)
+        db.session.commit()
+        flash("added", "green")
+    return redirect(url_for('show_tasks',project_id=project_id)) 
 
 app.run(debug=True, host="127.0.0.1", port=3000)

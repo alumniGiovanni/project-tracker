@@ -15,5 +15,8 @@
             <br>
             <input type="submit" value="Add task">
         </form>
+        {% for category, message in get_flashed_messages(
+            with_categories=true)%}
+        {% endfor %} 
     </body>
 </html>
